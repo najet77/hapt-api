@@ -4,9 +4,9 @@ import Formation from "../models/formation";
 export const create = async (req, res) => {
   try {
     let formation = new Formation(req.body);
-    formation = await client.save().then(newFormation => newFormation);
+    formation = await formation.save().then(newFormation => newFormation);
 
-    return res.status(201).json(client);
+    return res.status(201).json(formation);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: error.message });
