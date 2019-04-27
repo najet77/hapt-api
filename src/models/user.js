@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema(
       enum: ["admin", "tutor", "student"],
       default: "student"
     },
+    image: String,
     deleted: { type: Boolean, default: false }
   },
   {

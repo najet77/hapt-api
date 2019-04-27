@@ -5,7 +5,9 @@ import {
   findAll,
   findOne,
   update,
-  remove
+  remove,
+  upload,
+  saveFile
 } from "../controllers/userController.js";
 
 export default function(router) {
@@ -15,12 +17,19 @@ export default function(router) {
   // Retrieve all Users
   router.get("/users", requireAuth, requireAdmin, findAll);
 
-  // Retrieve a single Note with userId
+  // Retrieve a single User with userId
   router.get("/users/:userId", requireAuth, requireAdmin, findOne);
 
-  // Update a Note with userId
-  router.put("/users/:userId", requireAuth, requireAdmin, update);
+  // Update a User with userId
+  router.put(
+    "/users/:userId",
+    requireAuth,
+    requireAdmin,
+    upload,
+    saveFile,
+    update
+  );
 
-  // Delete a Note with noteId
+  // Delete a User with userId
   router.delete("/users/:userId", requireAuth, requireAdmin, remove);
 }

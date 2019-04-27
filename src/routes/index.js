@@ -14,10 +14,10 @@ router.get("/", (req, res) => {
   res.json({ api: "ok" });
 });
 
-// authRoutes(router);
-// userRoutes(router);
-// classeRoutes(router);
-// formationRoutes(router);
-// courRoutes(router);
+authRoutes(router);
+userRoutes(router);
+classeRoutes(router);
+formationRoutes(router);
+courRoutes(router);
 
 export default router;

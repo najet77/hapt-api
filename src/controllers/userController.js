@@ -1,4 +1,50 @@
+import multer from "multer";
+import uuid from "uuid";
+import jimp from "jimp";
+import { join } from "path";
 import User from "../models/user.js";
+
+// upload image middelwer
+const storage = multer.memoryStorage();
+
+const fileFilter = (req, file, next) => {
+  if (file.mimetype.startsWith("image/")) {
+    next(null, true);
+    return;
+  }
+  next(null, false);
+};
+
+const multerOptions = {
+  storage,
+  fileFilter
+};
+
+export const upload = multer(multerOptions).single("file");
+
+export const saveFile = async (req, res, next) => {
+  if (!req.file) {
+    return next();
+  }
+  const extension = req.file.mimetype.split("/")[1];
+  const fileName = `user${req.params.id || uuid.v4()}.${extension}`;
+  let folder;
+  if (process.platform === "win32") {
+    folder = join(process.env.APPDATA, "hapt", "users");
+  } else {
+    folder = join(process.env.HOME, ".config", "hapt", "users");
+  }
+
+  try {
+    const image = await jimp.read(req.file.buffer);
+    await image.resize(jimp.AUTO, 360);
+    await image.write(`${folder}/${fileName}`);
+    req.body.image = `/files/users/${fileName}`;
+    next();
+  } catch (e) {
+    next(e);
+  }
+};
 
 // Create and Save a new User
 export const create = (req, res) => {
