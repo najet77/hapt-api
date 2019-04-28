@@ -1,13 +1,13 @@
-import express from "express";
-import bodyParser from "body-parser";
+import express from 'express';
+import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import { port  } from "./config/env";
-import routes from "./routes";
+import { port } from './config/env';
+import routes from './routes';
 // connect to db
-import "./config/db";
+import './config/db';
 
-// dir upload file : create folder project 
+// dir upload file : create folder project
 let dirHapt;
 if (process.platform === 'win32') {
   dirHapt = path.join(process.env.APPDATA, 'hapt');
@@ -24,14 +24,12 @@ fs.exists(dirHapt, exists => {
   }
 });
 
-
 const app = express();
 
 // morgan is just a logger to log responses in the console.
 app.use(morgan('combined'));
 // helmet is a package to add some security headers to the responses.
 app.use(helmet());
-
 
 // serve static files (images...) from public folder.
 app.use(express.static(path.join(__dirname, '../public')));
@@ -47,11 +45,10 @@ if (process.platform === 'win32') {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 // config routes
-app.use("/", routes);
+app.use('/', routes);
 
 // listen for requests
 app.listen(port, () => {
-  console.log("Server is listening on port: " + port);
+  console.warn('Server is listening on port: ' + port);
 });

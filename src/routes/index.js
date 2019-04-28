@@ -1,22 +1,20 @@
 import { Router } from 'express';
 
-import authRoutes from "./authRoutes";
-import userRoutes from "./userRoutes";
-import classeRoutes from "./classeRoutes";
-import formationRoutes from "./formationRoutes";
-import courRoutes from "./courRoutes";
-
-
+import authRoutes from './authRoutes';
+import userRoutes from './userRoutes';
+import classRoutes from './classRoutes';
+import formationRoutes from './formationRoutes';
+import courRoutes from './courseRoutes';
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.json({ api: "ok" });
+router.get('/', (req, res) => {
+  res.json({ api: 'ok' });
 });
 
 authRoutes(router);
 userRoutes(router);
-classeRoutes(router);
+classRoutes(router);
 formationRoutes(router);
 courRoutes(router);
 

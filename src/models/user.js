@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import validator from "validator";
-import bcrypt from "bcryptjs";
+import mongoose from 'mongoose';
+import validator from 'validator';
+import bcrypt from 'bcryptjs';
 
 const userSchema = mongoose.Schema(
   {
@@ -22,8 +22,8 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "tutor", "student"],
-      default: "student"
+      enum: ['admin', 'tutor', 'student'],
+      default: 'student'
     },
     image: String,
     deleted: { type: Boolean, default: false }
@@ -35,7 +35,7 @@ const userSchema = mongoose.Schema(
 
 // userSchema.index({email:1}, {unique:true})
 
-userSchema.pre("save", function(next) {
+userSchema.pre('save', function(next) {
   const user = this;
   bcrypt.hash(user.password, 10, (err, hash) => {
     if (err) return next(err);
@@ -44,7 +44,7 @@ userSchema.pre("save", function(next) {
   });
 });
 
-userSchema.pre("findOneAndUpdate", function(next) {
+userSchema.pre('findOneAndUpdate', function(next) {
   const user = this._update.$set;
   if (user.password) {
     bcrypt.hash(user.password, 10, (err, hash) => {
@@ -64,4 +64,4 @@ userSchema.methods.getInitials = function() {
   return this.firstName[0] + this.lastName[0];
 };
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);

@@ -1,14 +1,14 @@
-import multer from "multer";
-import uuid from "uuid";
-import jimp from "jimp";
-import { join } from "path";
-import User from "../models/user.js";
+import multer from 'multer';
+import uuid from 'uuid';
+import jimp from 'jimp';
+import { join } from 'path';
+import User from '../models/user.js';
 
 // upload image middelwer
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, next) => {
-  if (file.mimetype.startsWith("image/")) {
+  if (file.mimetype.startsWith('image/')) {
     next(null, true);
     return;
   }
@@ -20,21 +20,20 @@ const multerOptions = {
   fileFilter
 };
 
-export const upload = multer(multerOptions).single("file");
+export const upload = multer(multerOptions).single('file');
 
 export const saveFile = async (req, res, next) => {
   if (!req.file) {
     return next();
   }
-  const extension = req.file.mimetype.split("/")[1];
+  const extension = req.file.mimetype.split('/')[1];
   const fileName = `user${req.params.id || uuid.v4()}.${extension}`;
   let folder;
-  if (process.platform === "win32") {
-    folder = join(process.env.APPDATA, "hapt", "users");
+  if (process.platform === 'win32') {
+    folder = join(process.env.APPDATA, 'hapt', 'users');
   } else {
-    folder = join(process.env.HOME, ".config", "hapt", "users");
+    folder = join(process.env.HOME, '.config', 'hapt', 'users');
   }
-
   try {
     const image = await jimp.read(req.file.buffer);
     await image.resize(jimp.AUTO, 360);
@@ -51,15 +50,13 @@ export const create = (req, res) => {
   // Validate request
   if (!req.body.email) {
     return res.status(400).json({
-      message: "email can not be empty"
+      message: 'email can not be empty'
     });
   }
-
   // Create a User
   const user = new User(req.body);
   const initials = User.getInitials();
   user.initials = initials;
-
   // Save User in the database
   user
     .save()
@@ -68,7 +65,7 @@ export const create = (req, res) => {
     })
     .catch(err => {
       return res.status(500).send({
-        message: err.message || "Some error occurred while creating the User."
+        message: err.message || 'Some error occurred while creating the User.'
       });
     });
 };
@@ -85,7 +82,7 @@ export const findAll = (req, res) => {
       })
       .catch(err => {
         return res.status(500).send({
-          message: err.message || "Some error occurred while retrieving users."
+          message: err.message || 'Some error occurred while retrieving users.'
         });
       });
   }
@@ -95,7 +92,7 @@ export const findAll = (req, res) => {
     })
     .catch(err => {
       return res.status(500).send({
-        message: err.message || "Some error occurred while retrieving users."
+        message: err.message || 'Some error occurred while retrieving users.'
       });
     });
 };
@@ -106,19 +103,19 @@ export const findOne = (req, res) => {
     .then(user => {
       if (!user) {
         return res.status(404).send({
-          message: "User not found with id " + req.params.userId
+          message: 'User not found with id ' + req.params.userId
         });
       }
       return res.status(200).json(user);
     })
     .catch(err => {
-      if (err.kind === "ObjectId") {
+      if (err.kind === 'ObjectId') {
         return res.status(404).send({
-          message: "User not found with id " + req.params.userId
+          message: 'User not found with id ' + req.params.userId
         });
       }
       return res.status(500).send({
-        message: "Error retrieving user with id " + req.params.userId
+        message: 'Error retrieving user with id ' + req.params.userId
       });
     });
 };
@@ -130,7 +127,7 @@ export const update = (req, res) => {
     .then(user => {
       if (!user) {
         return res.status(404).send({
-          message: "User not found with id " + req.params.userId
+          message: 'User not found with id ' + req.params.userId
         });
       }
       return res.status(200).json(user);
@@ -141,8 +138,9 @@ export const update = (req, res) => {
       //       message: "User not found with id " + req.params.userId
       //     });
       //   }
+      console.error(err);
       return res.status(500).send({
-        message: "Error updating user with id " + req.params.userId
+        message: 'Error updating user with id ' + req.params.userId
       });
     });
 };
@@ -153,10 +151,10 @@ export const remove = (req, res) => {
     .then(user => {
       if (!user) {
         return res.status(404).send({
-          message: "User not found with id " + req.params.userId
+          message: 'User not found with id ' + req.params.userId
         });
       }
-      return res.status(204).json({ message: "User deleted successfully!" });
+      return res.status(204).json({ message: 'User deleted successfully!' });
     })
     .catch(err => {
       //   if (err.kind === "ObjectId" || err.name === "NotFound") {
@@ -164,8 +162,9 @@ export const remove = (req, res) => {
       //       message: "User not found with id " + req.params.userId
       //     });
       //   }
+      console.error(err);
       return res.status(500).send({
-        message: "Could not delete user with id " + req.params.userId
+        message: 'Could not delete user with id ' + req.params.userId
       });
     });
 };

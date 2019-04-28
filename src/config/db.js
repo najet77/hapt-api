@@ -1,6 +1,6 @@
 // Configuring the database
-import { mongoURI } from "./env";
-import mongoose from "mongoose";
+import { mongoURI } from './env';
+import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
 
@@ -11,9 +11,9 @@ mongoose
     useCreateIndex: true
   })
   .then(() => {
-    console.log("Successfully connected to the database");
+    console.warn('Successfully connected to the database');
   })
   .catch(err => {
-    console.log("Could not connect to the database. Exiting now...", err);
+    console.error('Could not connect to the database. Exiting now...', err);
     process.exit();
   });

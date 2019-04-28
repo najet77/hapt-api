@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import autoIncrement from "mongoose-auto-increment";
+import mongoose from 'mongoose';
+import autoIncrement from 'mongoose-auto-increment';
 
 autoIncrement.initialize(mongoose.connection);
 
@@ -7,7 +7,7 @@ const formationSchema = mongoose.Schema(
   {
     number: Number,
     title: String,
-    cours: [{ type: mongoose.Schema.Types.ObjectId, ref: "Cour" }]
+    course: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
   },
   {
     timestamps: true
@@ -21,4 +21,4 @@ formationSchema.plugin(autoIncrement.plugin, {
   incrementBy: 1
 });
 
-export default mongoose.model("Formation", formationSchema);
+export default mongoose.model('Formation', formationSchema);
