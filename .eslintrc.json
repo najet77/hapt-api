@@ -9,10 +9,6 @@
   "parserOptions": {
     "sourceType": "module"
   },
-  "globals": {
-    "path": true,
-    "fs": true
-  },
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],

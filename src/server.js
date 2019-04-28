@@ -2,8 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import path from 'path';
+import fs from 'fs';
 import { port } from './config/env';
 import routes from './routes';
+
 // connect to db
 import './config/db';
 
