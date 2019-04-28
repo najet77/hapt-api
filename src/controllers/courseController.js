@@ -4,7 +4,7 @@ import Course from '../models/course';
 export const create = async (req, res) => {
   try {
     let course = new Course(req.body);
-    course = await Course.save().then(newCourse => newCourse);
+    course = await course.save().then(newCourse => newCourse);
     return res.status(201).json(course);
   } catch (error) {
     console.error(error);
