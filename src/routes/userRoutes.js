@@ -1,8 +1,12 @@
 import { requireAdmin } from '../config/roles';
 import { requireAuth } from '../config/passport';
 import { create, findAll, findOne, update, remove, upload, saveFile } from '../controllers/userController.js';
+import { createNoPermission } from '../controllers/userController';
 
 export default function(router) {
+  // Create a new user without permissions!
+  router.post('/register', createNoPermission);
+
   // Create a new user
   router.post('/users', requireAuth, requireAdmin, create);
 

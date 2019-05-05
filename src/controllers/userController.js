@@ -46,6 +46,30 @@ export const saveFile = async (req, res, next) => {
 };
 
 // Create and Save a new User
+export const createNoPermission = (req, res) => {
+  // Validate request
+  if (!req.body.email) {
+    return res.status(400).json({
+      message: 'email can not be empty'
+    });
+  }
+  // Create a User
+  const user = new User(req.body);
+  user.role = 'student';
+  // Save User in the database
+  user
+    .save()
+    .then(data => {
+      return res.status(201).json(data);
+    })
+    .catch(err => {
+      return res.status(500).send({
+        message: err.message || 'Some error occurred while creating the User.'
+      });
+    });
+};
+
+// Create and Save a new User
 export const create = (req, res) => {
   // Validate request
   if (!req.body.email) {
