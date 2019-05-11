@@ -16,10 +16,10 @@ const classSchema = mongoose.Schema(
 );
 
 classSchema.plugin(autoIncrement.plugin, {
-  model: 'Class',
+  model: 'Classroom',
   field: 'number',
   startAt: 1,
   incrementBy: 1
 });
 
-export default mongoose.model('Class', classSchema);
+export default mongoose.model('Classroom', classSchema);

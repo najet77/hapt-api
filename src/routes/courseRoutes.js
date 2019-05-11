@@ -3,17 +3,17 @@ import { create, findAll, findOne, update, remove } from '../controllers/courseC
 
 export default function(router) {
   // Create a new cour
-  router.post('/cours', requireAuth, create);
+  router.post('/courses', requireAuth, create);
 
   // Retrieve all Users
-  router.get('/cours', requireAuth, findAll);
+  router.get('/courses', requireAuth, findAll);
 
   // Retrieve a single Note with courId
-  router.get('/cours/:courId', requireAuth, findOne);
+  router.get('/courses/:courId', requireAuth, findOne);
 
   // Update a Note with courId
-  router.put('/cours/:courId', requireAuth, update);
+  router.put('/courses/:courId', requireAuth, update);
 
   // Delete a Note with noteId
-  router.delete('/cours/:courId', requireAuth, remove);
+  router.delete('/courses/:courId', requireAuth, remove);
 }

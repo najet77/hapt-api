@@ -1,4 +1,4 @@
-import Class from '../models/class';
+import Class from '../models/classroom';
 
 // Create and Save a new Class
 export const create = async (req, res) => {
