@@ -7,8 +7,8 @@ const classSchema = mongoose.Schema(
   {
     number: Number,
     title: String,
-    students: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-    formations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Formation' }]
+    capacity: Number,
+    description: String,
   },
   {
     timestamps: true
