@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import path from 'path';
 import fs from 'fs';
+import cors from 'cors';
 import { port } from './config/env';
 import routes from './routes';
 
@@ -28,6 +29,9 @@ fs.exists(dirHapt, exists => {
 });
 
 const app = express();
+
+// This is CORS-enabled for all origins!
+app.use(cors());
 
 // morgan is just a logger to log responses in the console.
 app.use(morgan('combined'));
