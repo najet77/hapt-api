@@ -2,10 +2,10 @@ import { requireAuth } from '../config/passport';
 import { create, findAll, findOne, update, remove } from '../controllers/trainerController.js';
 
 export default function(router) {
-  // Create a new cour
+  // Create a new Trainer
   router.post('/trainers', requireAuth, create);
 
-  // Retrieve all Users
+  // Retrieve all Trainers
   router.get('/trainers', requireAuth, findAll);
 
   // Retrieve a single Note with trainerId
@@ -14,6 +14,6 @@ export default function(router) {
   // Update a Note with trainerId
   router.put('/trainers/:trainerId', requireAuth, update);
 
-  // Delete a Note with noteId
+  // Delete a Trainer with trainerId
   router.delete('/trainers/:trainerId', requireAuth, remove);
 }
