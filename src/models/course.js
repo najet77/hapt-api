@@ -8,7 +8,7 @@ const courseSchema = mongoose.Schema(
   {
     number: Number,
     title: String,
-    tutor: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    tutor: { type: mongoose.Schema.Types.ObjectId, ref: 'Trainer' },
     formation: { type: mongoose.Schema.Types.ObjectId, ref: 'Formation' }
   },
   {
@@ -30,10 +30,22 @@ courseSchema.post('save', course => {
     console.error(err.message);
     throw new Error(err.message);
   });
+  Course.findByIdAndUpdate(course.tutor, {
+    $push: { course: course._id }
+  }).catch(err => {
+    console.error(err.message);
+    throw new Error(err.message);
+  });
 });
 
 courseSchema.post('findOneAndRemove', course => {
   Course.findByIdAndUpdate(course.formation, {
+    $pull: { course: course._id }
+  }).catch(err => {
+    console.error(err.message);
+    throw new Error(err.message);
+  });
+  Course.findByIdAndUpdate(course.tutor, {
     $pull: { course: course._id }
   }).catch(err => {
     console.error(err.message);
