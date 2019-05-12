@@ -8,7 +8,7 @@ const classSchema = mongoose.Schema(
     number: Number,
     title: String,
     capacity: Number,
-    description: String,
+    description: String
   },
   {
     timestamps: true
