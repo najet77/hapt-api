@@ -1,6 +1,6 @@
 import Course from '../models/course';
 
-// Create and Save a new Cour
+// Create and Save a new Course
 export const create = async (req, res) => {
   try {
     let course = new Course(req.body);
