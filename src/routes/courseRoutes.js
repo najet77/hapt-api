@@ -8,12 +8,12 @@ export default function(router) {
   // Retrieve all Users
   router.get('/courses', requireAuth, findAll);
 
-  // Retrieve a single Note with courId
-  router.get('/courses/:courId', requireAuth, findOne);
+  // Retrieve a single Note with courseId
+  router.get('/courses/:courseId', requireAuth, findOne);
 
-  // Update a Note with courId
-  router.put('/courses/:courId', requireAuth, update);
+  // Update a Note with courseId
+  router.put('/courses/:courseId', requireAuth, update);
 
   // Delete a Note with noteId
-  router.delete('/courses/:courId', requireAuth, remove);
+  router.delete('/courses/:courseId', requireAuth, remove);
 }

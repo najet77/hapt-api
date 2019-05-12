@@ -25,15 +25,15 @@ export const findAll = async (req, res) => {
   }
 };
 
-// Find a single course with a courId
+// Find a single course with a courseId
 export const findOne = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.courId)
+    const course = await Course.findById(req.params.courseId)
       .populate({ path: 'students', model: 'User', select: '-password' })
       .populate('formations');
     if (!course) {
       return res.status(404).send({
-        message: 'Course not found with id ' + req.params.courId
+        message: 'Course not found with id ' + req.params.courseId
       });
     }
     return res.status(200).json(course);
@@ -43,14 +43,14 @@ export const findOne = async (req, res) => {
   }
 };
 
-// Update a course identified by the courId in the request
+// Update a course identified by the courseId in the request
 export const update = async (req, res) => {
   // Find course and update it with the request body
   try {
-    const course = await Course.findByIdAndUpdate(req.params.courId, { $set: req.body }, { new: true });
+    const course = await Course.findByIdAndUpdate(req.params.courseId, { $set: req.body }, { new: true });
     if (!course) {
       return res.status(404).send({
-        message: 'Course not found with id ' + req.params.courId
+        message: 'Course not found with id ' + req.params.courseId
       });
     }
     return res.status(200).json(course);
@@ -60,13 +60,13 @@ export const update = async (req, res) => {
   }
 };
 
-// Delete a course with the specified courId in the request
+// Delete a course with the specified courseId in the request
 export const remove = async (req, res) => {
   try {
-    const course = await Course.findByIdAndRemove(req.params.courId);
+    const course = await Course.findByIdAndRemove(req.params.courseId);
     if (!course) {
       return res.status(404).send({
-        message: 'Course not found with id ' + req.params.courId
+        message: 'Course not found with id ' + req.params.courseId
       });
     }
     return res.status(204).json({ message: 'Course deleted successfully!' });
