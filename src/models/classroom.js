@@ -3,10 +3,10 @@ import autoIncrement from 'mongoose-auto-increment';
 
 autoIncrement.initialize(mongoose.connection);
 
-const classSchema = mongoose.Schema(
+const classroomSchema = mongoose.Schema(
   {
     number: Number,
-    title: String,
+    name: String,
     capacity: Number,
     description: String
   },
@@ -15,11 +15,11 @@ const classSchema = mongoose.Schema(
   }
 );
 
-classSchema.plugin(autoIncrement.plugin, {
+classroomSchema.plugin(autoIncrement.plugin, {
   model: 'Classroom',
   field: 'number',
   startAt: 1,
   incrementBy: 1
 });
 
-export default mongoose.model('Classroom', classSchema);
+export default mongoose.model('Classroom', classroomSchema);
