@@ -33,8 +33,6 @@ const userSchema = mongoose.Schema(
   }
 );
 
-// userSchema.index({email:1}, {unique:true})
-
 userSchema.pre('save', function(next) {
   const user = this;
   bcrypt.hash(user.password, 10, (err, hash) => {

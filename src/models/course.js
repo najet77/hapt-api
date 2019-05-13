@@ -23,14 +23,14 @@ courseSchema.plugin(autoIncrement.plugin, {
   incrementBy: 1
 });
 
-courseSchema.post('save', course => {
-  Course.findByIdAndUpdate(course.formation, {
+courseSchema.post('save', async course => {
+  await Course.findByIdAndUpdate(course.formation, {
     $push: { course: course._id }
   }).catch(err => {
     console.error(err.message);
     throw new Error(err.message);
   });
-  Course.findByIdAndUpdate(course.tutor, {
+  await Course.findByIdAndUpdate(course.tutor, {
     $push: { course: course._id }
   }).catch(err => {
     console.error(err.message);
@@ -38,14 +38,14 @@ courseSchema.post('save', course => {
   });
 });
 
-courseSchema.post('findOneAndRemove', course => {
-  Course.findByIdAndUpdate(course.formation, {
+courseSchema.post('findOneAndRemove', async course => {
+  await Course.findByIdAndUpdate(course.formation, {
     $pull: { course: course._id }
   }).catch(err => {
     console.error(err.message);
     throw new Error(err.message);
   });
-  Course.findByIdAndUpdate(course.tutor, {
+  await Course.findByIdAndUpdate(course.tutor, {
     $pull: { course: course._id }
   }).catch(err => {
     console.error(err.message);
