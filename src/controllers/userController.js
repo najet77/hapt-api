@@ -1,8 +1,10 @@
 import multer from 'multer';
+import jwt from 'jwt-simple';
 import uuid from 'uuid';
 import jimp from 'jimp';
 import { join } from 'path';
 import User from '../models/user.js';
+import { JWTSECRET } from '../config/env';
 
 // upload image middelwer
 const storage = multer.memoryStorage();
@@ -43,30 +45,6 @@ export const saveFile = async (req, res, next) => {
   } catch (e) {
     next(e);
   }
-};
-
-// Create and Save a new User
-export const createNoPermission = (req, res) => {
-  // Validate request
-  if (!req.body.email) {
-    return res.status(400).json({
-      message: 'email can not be empty'
-    });
-  }
-  // Create a User
-  const user = new User(req.body);
-  user.role = 'student';
-  // Save User in the database
-  user
-    .save()
-    .then(data => {
-      return res.status(201).json(data);
-    })
-    .catch(err => {
-      return res.status(500).send({
-        message: err.message || 'Some error occurred while creating the User.'
-      });
-    });
 };
 
 // Create and Save a new User
@@ -189,6 +167,47 @@ export const remove = (req, res) => {
       console.error(err);
       return res.status(500).send({
         message: 'Could not delete user with id ' + req.params.userId
+      });
+    });
+};
+
+// get the current authenticated user
+export const getAuthUser = (req, res) => {
+  if (req.headers && req.headers.authorization) {
+    let decoded;
+    try {
+      decoded = jwt.decode(req.headers.authorization, JWTSECRET);
+    } catch (error) {
+      console.error(error);
+      return res.status(401).send('unauthorized');
+    }
+    // Fetch the user by id
+    User.findOne({ _id: decoded.sub }).then(function(user) {
+      return res.status(200).json(user);
+    });
+  }
+};
+
+// Create and Save a new User
+export const createNoPermission = (req, res) => {
+  // Validate request
+  if (!req.body.email) {
+    return res.status(400).json({
+      message: 'email can not be empty'
+    });
+  }
+  // Create a User
+  const user = new User(req.body);
+  user.role = 'student';
+  // Save User in the database
+  user
+    .save()
+    .then(data => {
+      return res.status(201).json(data);
+    })
+    .catch(err => {
+      return res.status(500).send({
+        message: err.message || 'Some error occurred while creating the User.'
       });
     });
 };
